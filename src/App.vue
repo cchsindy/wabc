@@ -31,8 +31,13 @@
         <label for="phone">Phone:</label>
         <input type="tel" id="phone" v-model="phone" required>
         <h2>About Your Membership</h2>
-        <label for="level">Level:</label>
-        <input type="text" id="level" v-model="level" required>
+        <h3>Choose your membership level:</h3>
+        <input type="radio" id="warrior" v-model="level" value="warrior" required>
+        <label for="warrior">Warrior</label>
+        <input type="radio" id="maroon" v-model="level" value="maroon" required>
+        <label for="maroon">Maroon</label>
+        <input type="radio" id="green" v-model="level" value="green" required>
+        <label for="green">Green</label>
         <label for="students">Your Students:<br>If applicable, please list your student's name, year of graduation and any sports they played.</label>
         <textarea id="students" v-model="students" rows="5"></textarea>
         <h2>Become a Booster Club Volunteer!</h2>
@@ -45,13 +50,13 @@ I cannot commit to volunteer activities at this time, but have ideas for fundrai
         </p>
         <h2>Payment</h2>
         <label for="card">Credit Card #:</label>
-        <input type="text" id="card" v-model="card" :required="payOnline">
+        <input type="text" id="card" v-model="card" required>
         <label for="expiration">Expiration:</label>
-        <input type="text" id="expiration" v-model="expiration" :required="payOnline">
+        <input type="text" id="expiration" v-model="expiration" required>
         <label for="code">Security Code:</label>
-        <input type="text" id="code" v-model="code" :required="payOnline">
+        <input type="text" id="code" v-model="code" required>
         <label for="amount">Amount: $</label>
-        <input type="number" id="amount" v-model="amount" min="20" value="20" :required="payOnline">
+        <input type="number" id="amount" v-model="amount" min="20" value="20" required>
         <div class="center">
           <div class="message">{{message}}</div>
           <div v-show="message === 'Processing...'">
@@ -68,7 +73,108 @@ I cannot commit to volunteer activities at this time, but have ideas for fundrai
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  name: 'app',
+  data: () => {
+    return {
+      lastname: '',
+      firstname: '',
+      address: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      email: '',
+      phone: '',
+      level: '',
+      students: '',
+      card: '',
+      expiration: '',
+      code: '',
+      amount: '250',
+      message: '',
+      showSubmit: true
+    }
+  },
+  computed: {
+    invalid() {
+      let invalid = false
+      if (this.lastname === ''
+        || this.firstname === ''
+        || this.address === ''
+        || this.city === ''
+        || this.state === ''
+        || this.zipcode === ''
+        || this.email === ''
+        || this.phone === ''
+        || this.level === ''
+        || this.students === ''
+        || this.card === ''
+        || this.expiration === ''
+        || this.code === ''
+        || this.amount === '') invalid = true
+      if (parseFloat(this.amount) < 50.0) invalid = true
+      return invalid
+    }
+  },
+  methods: {
+    register() {
+      this.showSubmit = false
+      this.message = 'Processing...'
+      let html = '<html><body>'
+      html += '<h1>WABC Membership</h1>'
+      html += '<h2>Your Membership Details</h2>'
+      // html += `<ul><li>Year: ${this.year}</li><li>Make: ${this.make}</li><li>Model: ${this.model}</li></ul>`
+      // html += '<h2>Thank you so much for signing up to be a part of this special event honoring our volunteers!</h2><p>Please check in between 5-5:45pm at Covenant Christian High School. We look forward to seeing you on July 19!</p>'
+      html += '</body></html>'
+      let data = {
+        firstName: this.firstname,
+        lastName: this.lastname,
+        address: this.address,
+        city: this.city,
+        state: this.state,
+        zip: this.zipcode,
+        email: this.email,
+        phone: this.phone,
+        level: this.level,
+        students: this.students,
+        ccNumber: this.card,
+        ccExpiration: this.expiration,
+        ccCode: this.code,
+        amount: this.amount,
+        description: 'WABC Membership',
+        html
+      }
+      axios
+        .post('https://us-central1-my-covenant.cloudfunctions.net/creditCard', {
+          data
+        })
+        .then(result => {
+          this.message = result.data.description
+          if (result.data.responseCode != 1) {
+            this.message += ' Please fix your information above and try again.'
+            this.showSubmit = true
+          }
+          if (result.data.transactionId) {
+            data.transactionId = result.data.transactionId
+            axios
+              .post('https://us-central1-my-covenant.cloudfunctions.net/wabc', {
+                data
+              })
+              .then(result => {
+                this.message = result.data
+              })
+              .catch(() => {
+                this.message = 'Could not complete your membership.'
+              })
+          }
+        })
+        .catch(() => {
+          this.message = 'This operation is currently unavailable.'
+        })
+    }
+  }
 }
 </script>
 
