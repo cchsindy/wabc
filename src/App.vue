@@ -118,10 +118,10 @@ export default {
     amount() {
       let a = 0
       switch (this.level) {
-        case 'warrior':
+        case 'Warrior Level':
           a = 250
           break
-        case 'maroon':
+        case 'Maroon Level':
           a = 150
           break
         default:
