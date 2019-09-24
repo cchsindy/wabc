@@ -138,8 +138,8 @@ export default {
       let html = '<html><body>'
       html += '<h1>WABC Membership</h1>'
       html += '<h2>Your Membership Details</h2>'
-      // html += `<ul><li>Year: ${this.year}</li><li>Make: ${this.make}</li><li>Model: ${this.model}</li></ul>`
-      // html += '<h2>Thank you so much for signing up to be a part of this special event honoring our volunteers!</h2><p>Please check in between 5-5:45pm at Covenant Christian High School. We look forward to seeing you on July 19!</p>'
+      html += `<p>Membership: ${this.level}<br>Students: ${this.students}<br>Volunteer Interest: ${this.volunteer}</p>`
+      html += '<h2>Thank you for becoming a Warrior Athletic Booster Club member and supporting Covenant Athletics!</h2><p>For questions email: boosters@covenantchristian.org</p>'
       html += '</body></html>'
       let data = {
         firstName: this.firstname,
