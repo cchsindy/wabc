@@ -33,21 +33,21 @@
         <h2>About Your Membership</h2>
         <h3>Choose your membership level:</h3>
         <label for="warrior" class="warrior">Warrior Level</label>
-        <input type="radio" id="warrior" v-model="level" value="warrior" required>
+        <input type="radio" id="warrior" v-model="level" value="Warrior Level" required>
         <label for="maroon" class="maroon">Maroon Level</label>
-        <input type="radio" id="maroon" v-model="level" value="maroon" required>
+        <input type="radio" id="maroon" v-model="level" value="Maroon Level" required>
         <label for="green" class="green">Green Level</label>
-        <input type="radio" id="green" v-model="level" value="green" required>
+        <input type="radio" id="green" v-model="level" value="Green Level" required>
         <label for="students">Your Students:<br><span class="small">If applicable, please list your student's name, year of graduation and any sports they played.</span></label>
         <textarea id="students" v-model="students" rows="5"></textarea>
         <h2>Become a Booster Club Volunteer!</h2>
         <p>The Warrior Athletic Booster Club is always looking for volunteers to work on committees and provide support for our fundraising. Please select your volunteer preference below:</p>
         <label for="yes">YES! I would like to be involved in the WABC committees and activities. Please contact me for more information.</label>
-        <input type="radio" id="yes" v-model="volunteer" value="yes" required>
+        <input type="radio" id="yes" v-model="volunteer" value="Yes" required>
         <label for="maybe">Maybe. I would like more information on current needs of a volunteer.</label>
-        <input type="radio" id="maybe" v-model="volunteer" value="maybe" required>
+        <input type="radio" id="maybe" v-model="volunteer" value="Maybe" required>
         <label for="no">I cannot commit to volunteer activities at this time, but have ideas for fundraising projects/activities that we might want to consider for the future.</label>
-        <input type="radio" id="no" v-model="volunteer" value="no" required>
+        <input type="radio" id="no" v-model="volunteer" value="No" required>
         <h2>Payment</h2>
         <label for="card">Credit Card #:</label>
         <input type="text" id="card" v-model="card" required>
@@ -87,9 +87,9 @@ export default {
       zipcode: '',
       email: '',
       phone: '',
-      level: 'warrior',
+      level: 'Warrior Level',
       students: '',
-      volunteer: 'yes',
+      volunteer: 'Yes',
       card: '',
       expiration: '',
       code: '',
