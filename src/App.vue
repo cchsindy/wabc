@@ -32,6 +32,20 @@
           </ul>
         </li>
         <li>
+          <span class="large gold">Grandparent Gold - $100</span>:
+          <ul>
+            <li>Pass for home games for 21-22 season</li>
+            <li>2 t shirts</li>
+          </ul>
+        </li>
+        <li>
+          <span class="large silver">Grandparent Silver - $50</span>:
+          <ul>
+            <li>5 home games passes for the 21-22 season</li>
+            <li>1 t shirt</li>
+          </ul>
+        </li>
+        <li>
           <span class="large green">Green Level - $25</span>:
           <ul>
             <li>1 t shirt</li>
@@ -88,6 +102,22 @@
           id="maroon"
           v-model="level"
           value="Maroon Level"
+          required
+        />
+        <label for="gold" class="gold">Grandparent Gold</label>
+        <input
+          type="radio"
+          id="gold"
+          v-model="level"
+          value="Gold Level"
+          required
+        />
+        <label for="silver" class="silver">Grandparent Silver</label>
+        <input
+          type="radio"
+          id="silver"
+          v-model="level"
+          value="Silver Level"
           required
         />
         <label for="green" class="green">Green Level</label>
@@ -214,6 +244,12 @@ export default {
         case 'Maroon Level':
           a = 150
           break
+        case 'Gold Level':
+          a = 100
+          break
+        case 'Silver Level':
+          a = 50
+          break
         default:
           a = 25
           break
@@ -228,9 +264,7 @@ export default {
       let html = '<html><body>'
       html += '<h1>WABC Membership</h1>'
       html += '<h2>Your Membership Details</h2>'
-      html += `<p>Membership: ${this.level}<br>Students: ${
-        this.students
-      }<br>Volunteer Interest: ${this.volunteer}</p>`
+      html += `<p>Membership: ${this.level}<br>Students: ${this.students}<br>Volunteer Interest: ${this.volunteer}</p>`
       html +=
         '<h2>Thank you for becoming a Warrior Athletic Booster Club member and supporting Covenant Athletics!</h2><p>For questions email: boosters@covenantchristian.org</p>'
       html += '</body></html>'
@@ -345,6 +379,9 @@ textarea {
 .content {
   margin: 2vw;
 }
+.gold {
+  color: gold;
+}
 .green {
   color: #4a6930;
 }
@@ -364,6 +401,9 @@ textarea {
 }
 .maroon {
   color: #7b221e;
+}
+.silver {
+  color: silver;
 }
 .small {
   font-size: small;
